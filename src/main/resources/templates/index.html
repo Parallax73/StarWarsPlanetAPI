@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="template/static/style.css">
+
+    <title>Add planet</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/add">Add planet</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/list">List</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<form method="post" name="myForm" action="javascript:void(0);">
+    <div class="mb-3">
+        <label for="planetNameInput">Name:</label>
+        <input type="text" class="form-control" name="name" id="planetNameInput"  placeholder="Enter planet name ">
+        <small id="text" class="form-text text-muted"></small>
+    </div>
+    <div class="mb-3">
+        <label for="planetClimateInput">Climate</label>
+        <input type="text" class="form-control" name="climate" id="planetClimateInput" placeholder="Enter climate">
+    </div>
+    <div class="mb-3">
+        <label for="planetTerrainInput">Terrain</label>
+        <input type="text" class="form-control" name="terrain" id="planetTerrainInput" placeholder="Enter terrain">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <script>
+        $(document).ready(function() {
+            $("form[name='myForm']").submit(function(e) {
+                e.preventDefault(); // Prevent the default form submission behavior
+
+                // Serialize form data
+                var formData = $(this).serialize();
+
+                // Store a reference to the form element
+                var form = this;
+
+                // Perform an AJAX POST request to the server
+                $.ajax({
+                    type: "POST",
+                    url: "/add", // Replace with your server endpoint
+                    data: formData,
+                    success: function(response) {
+                        $(form)[0].reset();
+                    },
+                    error: function(err) {
+                        // Handle errors if necessary
+                        console.log(err);
+                    }
+                });
+            });
+        });
+    </script>
+</form>
+</body>
+</html>
